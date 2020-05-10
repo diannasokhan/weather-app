@@ -5,7 +5,7 @@ const Form = props => {
     return(
         <div className="container">
             <div>{props.error ? error(): null}</div>
-            <form onSubmit={props.loadWeather}>
+            <form onSubmit={props.loadWeather} >
             <div className="row" >
                 <div className="col-md-3">
                     <input type="text" className="form-control" name="city" placeholder="City or State" autoComplete="off" />
@@ -25,7 +25,7 @@ const Form = props => {
 function error(){
     return(
       <div className="alert alert-danger mx-5" role="alert">
-        Please enter City and Country
+        Please try again.
       </div>
     )
   }

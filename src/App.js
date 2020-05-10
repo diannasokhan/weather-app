@@ -69,8 +69,8 @@ class App extends React.Component {
 
     e.preventDefault();
 
-    const city = e.target.elements.city.value;
-    const country = e.target.elements.country.value;
+    const city = e.target.city.value;
+    const country = e.target.country.value;
     
     if(city && country){
       const api_call = await fetch(`https:api.openweathermap.org/data/2.5/weather?q=${city},${country}&appid=${API_key}`);
@@ -79,16 +79,20 @@ class App extends React.Component {
   
       console.log(response);
   
-      this.setState({
-        city: `${response.name}, ${response.sys.country}`,
-        celsius: this.calCelsius(response.main.temp),
-        temp_max: this.calCelsius(response.main.temp_max),
-        temp_min: this.calCelsius(response.main.temp_min),
-        description: response.weather[0].description,
-        error: false
-      });
-    
-      this.getWeatherIcon(this.weatherIcon, response.weather[0].id);
+      if(response.cod !== "404"){
+        this.setState({
+          city: `${response.name}, ${response.sys.country}`,
+          celsius: this.calCelsius(response.main.temp),
+          temp_max: this.calCelsius(response.main.temp_max),
+          temp_min: this.calCelsius(response.main.temp_min),
+          description: response.weather[0].description,
+          error: false
+        });
+      
+        this.getWeatherIcon(this.weatherIcon, response.weather[0].id);
+      }else{
+        this.setState({error: true});
+      }
     }else{
       this.setState({error: true});
     }
@@ -110,5 +114,6 @@ class App extends React.Component {
     )
   };
 };
+
 
 export default App;
